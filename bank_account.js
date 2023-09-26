@@ -11,11 +11,27 @@ class BankAccount {
     let value = prompt('Masukan jumlah saldo yang akan ditambahkan');
 
     if (!isNumber(value)) {
-      alert('You are not entering a number!');
+      alert('Masukkan hanya angka!');
       return;
     }
 
     this.saldo += parseInt(value);
+  }
+
+  kurangiSaldo() {
+    let value = prompt('Masukan jumlah saldo yang akan ditarik');
+
+    if (!isNumber(value)) {
+      alert('Masukkan hanya angka!');
+      return;
+    }
+
+    if (parseInt(value) > this.saldo) {
+      alert('Saldo anda tidak cukup');
+      return;
+    }
+
+    this.saldo -= parseInt(value);
   }
 }
 
@@ -25,7 +41,12 @@ const kurangiSaldoButton = document.getElementById('kurangiSaldo');
 
 tambahSaldoButton.addEventListener('click', () => {
   bankAccount.tambahSaldo();
-  alert(`saldo kamu saat ini : ${bankAccount.cekSaldo()}`);
+  tampilkanSaldo(bankAccount.cekSaldo());
+});
+
+kurangiSaldoButton.addEventListener('click', () => {
+  bankAccount.kurangiSaldo();
+  tampilkanSaldo(bankAccount.cekSaldo());
 });
 
 isNumber = (input) => {
@@ -36,23 +57,6 @@ isNumber = (input) => {
   return true;
 };
 
-kurangiSaldo = () => {
-  let value = prompt('Masukan jumlah saldo yang akan dikurangi');
-
-  if (isNaN(Number(value))) {
-    alert('You are not entering a number!');
-    return;
-  }
-
-  if (parseInt(value) > saldo) {
-    alert('Error, Low balance');
-    return;
-  }
-
-  saldo -= parseInt(value);
-  tampilkanSaldo();
-};
-
-tampilkanSaldo = () => {
-  alert(`Saldo terakhir : ${saldo}`);
+tampilkanSaldo = (saldo = 0) => {
+  alert(`saldo kamu saat ini : ${saldo}`);
 };
